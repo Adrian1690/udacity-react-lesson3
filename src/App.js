@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import logo from "./logo.svg";
+import Game from "./Game";
 import "./App.css";
 
 const value1 = Math.floor(Math.random() * 100);
@@ -56,17 +57,7 @@ class App extends Component {
           <img src={logo} className="App-logo" alt="logo" />
           <h1 className="App-title">ReactND - Coding Practice</h1>
         </header>
-        <div className="game">
-          <h2>Mental Math</h2>
-          <div className="equation">
-            <p className="text">{`${value1} + ${value2} + ${value3} = ${proposedAnswer}`}</p>
-          </div>
-          <button onClick={() => this.evaluate(true)}>True</button>
-          <button onClick={() => this.evaluate(false)}>False</button>
-          <p className="text">
-            Your Score: {numCorrect}/{numQuestions}
-          </p>
-        </div>
+        <Game data={this.state} evaluate={this.evaluate} />
       </div>
     );
   }
