@@ -1,106 +1,75 @@
-import React from "react";
+import React, { Component } from "react";
 import logo from "./logo.svg";
 import "./App.css";
-import MovieCardsList from "./MovieCardsList";
 
-const profiles = [
-  {
-    id: 1,
-    userID: "1",
-    favoriteMovieID: "1"
-  },
-  {
-    id: 2,
-    userID: "2",
-    favoriteMovieID: "1"
-  },
-  {
-    id: 3,
-    userID: "4",
-    favoriteMovieID: "5"
-  },
-  {
-    id: 4,
-    userID: "5",
-    favoriteMovieID: "2"
-  },
-  {
-    id: 5,
-    userID: "3",
-    favoriteMovieID: "5"
-  },
-  {
-    id: 6,
-    userID: "6",
-    favoriteMovieID: "4"
+const value1 = Math.floor(Math.random() * 100);
+const value2 = Math.floor(Math.random() * 100);
+const value3 = Math.floor(Math.random() * 100);
+const proposedAnswer = Math.floor(Math.random() * 3) + value1 + value2 + value3;
+const numQuestions = 0;
+const numCorrect = 0;
+
+class App extends Component {
+  state = {
+    value1: value1,
+    value2: value2,
+    value3: value3,
+    proposedAnswer: proposedAnswer,
+    numQuestions: numQuestions,
+    numCorrect: numCorrect
+  };
+
+  evaluate = (answer) => {
+    const { value1, value2, value3, proposedAnswer } = this.state;
+    const evaluation = value1 + value2 + value3 === proposedAnswer;
+
+    const isCorrect = answer === evaluation;
+
+    const newValue1 = Math.floor(Math.random() * 100);
+    const newValue2 = Math.floor(Math.random() * 100);
+    const newValue3 = Math.floor(Math.random() * 100);
+    const newProposedAnswer =
+      Math.floor(Math.random() * 3) + newValue1 + newValue2 + newValue3;
+
+    this.setState((prevState) => ({
+      value1: newValue1,
+      value2: newValue2,
+      value3: newValue3,
+      proposedAnswer: newProposedAnswer,
+      numQuestions: prevState.numQuestions + 1,
+      numCorrect: isCorrect ? prevState.numCorrect + 1 : prevState.numCorrect
+    }));
+  };
+
+  render() {
+    const {
+      value1,
+      value2,
+      value3,
+      proposedAnswer,
+      numCorrect,
+      numQuestions
+    } = this.state;
+    return (
+      <div className="App">
+        <header className="App-header">
+          <img src={logo} className="App-logo" alt="logo" />
+          <h1 className="App-title">ReactND - Coding Practice</h1>
+        </header>
+        <div className="game">
+          <h2>Mental Math</h2>
+          <div className="equation">
+            <p className="text">{`${value1} + ${value2} + ${value3} = ${proposedAnswer}`}</p>
+          </div>
+          <button onClick={() => this.evaluate(true)}>True</button>
+          <button onClick={() => this.evaluate(false)}>False</button>
+          <p className="text">
+            Your Score: {numCorrect}/{numQuestions}
+          </p>
+        </div>
+      </div>
+    );
   }
-];
-
-const users = {
-  1: {
-    id: 1,
-    name: "Jane Jones",
-    userName: "coder"
-  },
-  2: {
-    id: 2,
-    name: "Matthew Page",
-    userName: "mpage"
-  },
-  3: {
-    id: 3,
-    name: "Autumn Green",
-    userName: "user123"
-  },
-  4: {
-    id: 3,
-    name: "John Doe",
-    userName: "user123"
-  },
-  5: {
-    id: 5,
-    name: "Lauren Johnson",
-    userName: "user123"
-  },
-  6: {
-    id: 6,
-    name: "Nicholas Lain",
-    userName: "user123"
-  }
-};
-
-const movies = {
-  1: {
-    id: 1,
-    name: "Planet Earth 1"
-  },
-  2: {
-    id: 2,
-    name: "Selma"
-  },
-  3: {
-    id: 3,
-    name: "Million Dollar Baby"
-  },
-  4: {
-    id: 4,
-    name: "Forrest Gump"
-  },
-  5: {
-    id: 5,
-    name: "Get Out"
-  }
-};
-
-const App = (props) => (
-  <div>
-    <header className="App-header">
-      <img src={logo} className="App-logo" alt="logo" />
-      <h1 className="App-title">ReactND - Coding Practice</h1>
-    </header>
-    <h1>How Popular is Your Favorite Movie?</h1>
-    <MovieCardsList profiles={profiles} movies={movies} users={users} />
-  </div>
-);
+}
 
 export default App;
