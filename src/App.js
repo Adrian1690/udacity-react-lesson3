@@ -12,17 +12,20 @@ class App extends React.Component {
       {
         firstName: "Adrian",
         lastName: "Penia",
-        userName: "adrian"
+        userName: "adrian",
+        gamesPlayed: 0
       }
     ]
   };
 
   existUserName = (userName) => {
-    return (
-      this.state.users.filter(
-        (user) => user.userName.toLowerCase() === userName.toLowerCase()
-      ).length > 0
-    );
+    for (const user of this.state.users) {
+      if (user.userName.toLowerCase() === userName.toLowerCase()) {
+        return true;
+      }
+    }
+
+    return false;
   };
 
   addUser = (user) => {
@@ -31,6 +34,7 @@ class App extends React.Component {
       return;
     }
 
+    user.gamesPlayed = 0;
     this.setState((prevState) => ({
       users: [...prevState.users, user],
       userNameRegisteredError: false

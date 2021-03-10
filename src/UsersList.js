@@ -1,7 +1,9 @@
 import React from "react";
+import PropTypes from "prop-types";
+
 import UserRow from "./UserRow";
 
-class UserList extends React.Component {
+class UsersList extends React.Component {
   render() {
     const { users } = this.props;
     return (
@@ -17,4 +19,8 @@ class UserList extends React.Component {
   }
 }
 
-export default UserList;
+UsersList.propTypes = {
+  users: PropTypes.array.isRequired
+};
+
+export default UsersList;

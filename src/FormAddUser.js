@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 
 class FormAddUser extends React.Component {
   state = {
@@ -69,5 +70,9 @@ class FormAddUser extends React.Component {
     );
   }
 }
+
+FormAddUser.propTypes = {
+  addUser: PropTypes.func.isRequired
+};
 
 export default FormAddUser;

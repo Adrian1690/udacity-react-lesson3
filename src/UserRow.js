@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import PropTypes from "prop-types";
 
 const UserRow = (props) => {
   const [showGames, setShowGames] = useState(true);
@@ -8,7 +9,7 @@ const UserRow = (props) => {
     setShowGames(!showGames);
   };
 
-  const games = showGames ? "0" : "*";
+  const games = showGames ? props.user.gamesPlayed : "*";
 
   return (
     <li>
@@ -20,6 +21,10 @@ const UserRow = (props) => {
       )}
     </li>
   );
+};
+
+UserRow.propTypes = {
+  user: PropTypes.object
 };
 
 export default UserRow;
