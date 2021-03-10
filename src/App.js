@@ -1,27 +1,40 @@
 import React from "react";
 import logo from "./logo.svg";
 import "./App.css";
-import ItemsList from "./ItemsList";
-import NewItem from "./NewItem";
-import DeleteItem from "./DeleteItem";
+import FormAddUser from "./FormAddUser";
+import MessageUserRegisteredError from "./MessageUserRegisteredError";
+import UsersList from "./UsersList";
 
 class App extends React.Component {
   state = {
-    items: []
+    userNameRegisteredError: false,
+    users: [
+      {
+        firstName: "Adrian",
+        lastName: "Penia",
+        userName: "adrian"
+      }
+    ]
   };
 
-  onAddItem = (newItem) => {
-    this.setState((oldState) => ({
-      items: [...oldState.items, newItem]
+  existUserName = (userName) => {
+    return (
+      this.state.users.filter(
+        (user) => user.userName.toLowerCase() === userName.toLowerCase()
+      ).length > 0
+    );
+  };
+
+  addUser = (user) => {
+    if (this.existUserName(user.userName)) {
+      this.setState({ userNameRegisteredError: true });
+      return;
+    }
+
+    this.setState((prevState) => ({
+      users: [...prevState.users, user],
+      userNameRegisteredError: false
     }));
-  };
-
-  deleteLastItem = (event) => {
-    this.setState((prevState) => ({ items: this.state.items.slice(0, -1) }));
-  };
-
-  noItemsFound = () => {
-    return this.state.items.length === 0;
   };
 
   render() {
@@ -31,16 +44,15 @@ class App extends React.Component {
           <img src={logo} className="App-logo" alt="logo" />
           <h1 className="App-title">ReactND - Coding Practice</h1>
         </header>
-        <h2>Shopping List</h2>
-        <NewItem addItem={this.addItem} onAddItem={this.onAddItem} />
 
-        <DeleteItem
-          deleteLastItem={this.deleteLastItem}
-          noItemsFound={this.noItemsFound}
+        <h2>Add User</h2>
+        <FormAddUser addUser={this.addUser} />
+
+        <MessageUserRegisteredError
+          displayError={this.state.userNameRegisteredError}
         />
 
-        <p className="items">Items</p>
-        <ItemsList items={this.state.items} />
+        <UsersList users={this.state.users} />
       </div>
     );
   }
